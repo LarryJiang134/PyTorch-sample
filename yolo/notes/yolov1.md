@@ -53,10 +53,10 @@
         - `momentum`: 0.9
         - `decay`: 0.0005
         - `learning rate`:
-            - 1-st epoch: from 0.0001 to 0.001 (to avoid possible diverge due to initialization)
-            - 2-nd ~ 75-th epoch: 0.001
-            - 76-th ~ 105-th epoch: 0.0001
-            - 106-th ~ 135-th epoch: 0.00001
+            - 1-st epoch: from 0.001 to 0.01 (to avoid possible diverge due to initialization)
+            - 2-nd ~ 75-th epoch: 0.01
+            - 76-th ~ 105-th epoch: 0.001
+            - 106-th ~ 135-th epoch: 0.0001
         - `data augmentation`:
             - random scaling
             - translations of up to 20% of original image size
