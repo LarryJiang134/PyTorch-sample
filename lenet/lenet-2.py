@@ -119,5 +119,5 @@ if __name__ == "__main__":
                 _, predicted = torch.max(outputs.data, 1)
                 total += labels.size(0)
                 correct += (predicted == labels).sum()
-            print('第%d个epoch的识别准确率为：%d%%' % (epoch + 1, (100 * correct / total)))
+            print('epoch %d accuracy：%d%%' % (epoch + 1, (100 * correct / total)))
     torch.save(net.state_dict(), '%s/net_%03d.pth' % (opt.outf, epoch + 1))
