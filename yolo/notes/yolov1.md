@@ -62,4 +62,7 @@
             - translations of up to 20% of original image size
             - randomly adjust the exposure and saturation of the image (up to the factor of 1.5 in HSV color space)
 
-### Inference
+### Limitation
+- Not suitable for dense object detection
+- Struggles with small objects that appears in groups
+
