@@ -24,6 +24,7 @@
 ### Network Design
 - Initial `conv` layers extract features, `fc` layers predict the output probabilities and coordinates
 - 24 `conv` layers + 2 `fc` layers
+- `Dropout` layer with 0.5 droping rate after `fc-1`
 
 ![yolov1-2](_image/yolov1-2.png)
 
@@ -42,6 +43,23 @@
         - Decrease the loss of confidence for boxes don't contain objects
         - <img src="http://latex.codecogs.com/gif.latex?\lambda_coord&space;=&space;5" title="\lambda_coord = 5" /> and <img src="http://latex.codecogs.com/gif.latex?\lambda_noobj&space;=&space;0.5" title="\lambda_noobj = 0.5" />
         - Predict the square root of the bounding box width and height to make smaller boxes matter more
-        
-    
-    
+    - Loss function:
+        - <img src="http://latex.codecogs.com/gif.latex?\lambda_{coord}\sum^{S^2}_{i=0}\sum^{B}_{j=0}\mathbb{I}^{obj}_{ij}[(x_i&space;-&space;\^{x}_i)^2&space;&plus;&space;(y_i&space;-&space;\^{y}_i)^2]\\&space;&plus;&space;\lambda_{coord}\sum^{S^2}_{i=0}\sum^{B}_{j=0}\mathbb{I}^{obj}_{ij}[(\sqrt{w_i}&space;-&space;\sqrt{\^{w}_i})^2&space;&plus;&space;(\sqrt{h_i}&space;-&space;\sqrt{\^{h}_i})^2]&space;&plus;&space;\sum^{S^2}_{i=0}\sum^{B}_{j=0}\mathbb{I}^{obj}_{ij}(C_i&space;-&space;\^{C}_i)^2\\&space;&plus;&space;\lambda_{noobj}\sum^{S^2}_{i=0}\sum^{B}_{j=0}\mathbb{I}^{obj}_{ij}(C_i&space;-&space;\^{C}_i)^2&space;&plus;&space;\sum^{S^2}_{i=0}\mathbb{I}^{obj}_{i}\sum_{c&space;\in&space;classes}(p_i(c)&space;-&space;\^{p}_i(c))^2\\" title="\lambda_{coord}\sum^{S^2}_{i=0}\sum^{B}_{j=0}\mathbb{I}^{obj}_{ij}[(x_i - \^{x}_i)^2 + (y_i - \^{y}_i)^2]\\ + \lambda_{coord}\sum^{S^2}_{i=0}\sum^{B}_{j=0}\mathbb{I}^{obj}_{ij}[(\sqrt{w_i} - \sqrt{\^{w}_i})^2 + (\sqrt{h_i} - \sqrt{\^{h}_i})^2] + \sum^{S^2}_{i=0}\sum^{B}_{j=0}\mathbb{I}^{obj}_{ij}(C_i - \^{C}_i)^2\\ + \lambda_{noobj}\sum^{S^2}_{i=0}\sum^{B}_{j=0}\mathbb{I}^{obj}_{ij}(C_i - \^{C}_i)^2 + \sum^{S^2}_{i=0}\mathbb{I}^{obj}_{i}\sum_{c \in classes}(p_i(c) - \^{p}_i(c))^2\\" />
+        - <img src="http://latex.codecogs.com/gif.latex?\mathbb{I}^{obj}_{ij}" title="\mathbb{I}^{obj}_{ij}" /> denotes if object appears in j-th bounding box of cell i
+    - In the paper, the training setting is:
+        - `training set`: PASCAL VOC 2007 and 2012
+        - `epoches`: 135
+        - `batch size`: 64
+        - `momentum`: 0.9
+        - `decay`: 0.0005
+        - `learning rate`:
+            - 1-st epoch: from 0.0001 to 0.001 (to avoid possible diverge due to initialization)
+            - 2-nd ~ 75-th epoch: 0.001
+            - 76-th ~ 105-th epoch: 0.0001
+            - 106-th ~ 135-th epoch: 0.00001
+        - `data augmentation`:
+            - random scaling
+            - translations of up to 20% of original image size
+            - randomly adjust the exposure and saturation of the image (up to the factor of 1.5 in HSV color space)
+
+### Inference
