@@ -2,7 +2,7 @@
 Note, implementation not yet done ! ! !  
 
 
-[paper notes](yolo/notes)
+[paper notes](notes)
 ## TODO list
 - [x] darknet
 - [x] detect
