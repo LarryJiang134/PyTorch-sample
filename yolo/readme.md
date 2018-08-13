@@ -4,9 +4,9 @@ Note, implementation not yet done ! ! !
 
 [paper notes](/notes)
 ## TODO list
-- [ ] darknet
-- [ ] detect
-- [ ] demo
+- [x] darknet
+- [x] detect
+- [x] demo
 - [ ] train
 - [ ] paper notes 
 
