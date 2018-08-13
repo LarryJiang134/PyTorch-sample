@@ -63,6 +63,6 @@
             - randomly adjust the exposure and saturation of the image (up to the factor of 1.5 in HSV color space)
 
 ### Limitation
-- Not suitable for dense object detection
+- Not suitable for dense objects detection
 - Struggles with small objects that appears in groups
 
