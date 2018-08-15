@@ -1,19 +1,14 @@
 """
 YOLO v2 (darknet) implementation
 
-TODO: implement yolo net
 """
 from __future__ import division
-
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torchvision
 
 from yolo.layers.layers import *
 from yolo.layers.region_layer import *
 from yolo.layers.yolo_layer import *
 from yolo.cfg.cfg import *
+
 
 class Darknet(nn.Module):
     def getLossLayers(self):

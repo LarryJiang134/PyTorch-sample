@@ -14,19 +14,10 @@ def arg_parse():
 
     """
     parser = argparse.ArgumentParser(description='PyTorch YOLOv2 LOGO detection Training')
-    parser.add_argument('--data', '-d', type=str,
-                        default='data/logo.data', help='data definition file')
-    parser.add_argument('--config', '-c', type=str,
-                        default='cfg/yolo_v2.cfg', help='network configuration file')
-    parser.add_argument('--weights', '-w', type=str,
-                        default='weights/pre-trained/yolov2.weights', help='initial weights')
-    parser.add_argument('--reset', '-r', action="store_true",
-                        default=False, help='initialize the epoch and model seen value')
-    parser.add_argument('--localmax', '-l', action="store_true",
-                        default=False, help='save net weights for local maximum fscore')
-
-    parser.add_argument('--lr', default=0.001, type=float, help='learning rate')
-    parser.add_argument('--resume', '-resume', action='store_true', help='resume from checkpoint')
+    parser.add_argument('--data', '-d', type=str, default='data/logo.data', help='data definition file')
+    parser.add_argument('--video', '-v', type=str, default='none', help='testing video, none if using webcam')
+    parser.add_argument('--config', '-c', type=str, default='cfg/yolo_v2.cfg', help='network configuration file')
+    parser.add_argument('--weights', '-w', type=str, default='weights/pre-trained/yolov2.weights', help='initial weights')
 
     return parser.parse_args()
 
@@ -52,7 +43,11 @@ def main():
     if use_cuda:
         m.cuda()
 
-    cap = cv2.VideoCapture(0)
+    if args.video != 'none':
+        cap = cv2.VideoCapture(args.video)
+    else:
+        cap = cv2.VideoCapture(0)
+
     if not cap.isOpened():
         print("Unable to open camera")
         exit(-1)

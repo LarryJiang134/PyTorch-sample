@@ -7,6 +7,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from yolo.utils import bbox_iou, multi_bbox_ious, convert2cpu
 
+
 class RegionLayer(nn.Module):
     def __init__(self, num_classes=0, anchors=[1.0], num_anchors=1, use_cuda=None):
         super(RegionLayer, self).__init__()
@@ -15,7 +16,6 @@ class RegionLayer(nn.Module):
         self.num_classes = num_classes
         self.num_anchors = num_anchors
         self.anchor_step = len(anchors)//num_anchors
-        #self.anchors = torch.stack(torch.FloatTensor(anchors).split(self.anchor_step)).to(self.device)
         self.anchors = torch.FloatTensor(anchors).view(self.num_anchors, self.anchor_step).to(self.device)
         self.rescore = 1
         self.coord_scale = 1
